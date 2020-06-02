@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Алеся Мацеральник](https://up.htmlacademy.ru/javascript/20/user/898179).
-* Наставник: `Неизвестно`.
+* Наставник: [Сергей Буртылёв](https://htmlacademy.ru/profile/id3341).
 
 ---
 
