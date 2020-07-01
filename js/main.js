@@ -21,6 +21,9 @@ var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.g
 var map = document.querySelector('.map');
 var layoutMaxX = map.clientWidth;
 var mapPins = document.querySelector('.map__pins');
+var pinTemplate = document.querySelector('#pin')
+  .content
+  .querySelector('.map__pin');
 
 // рандом числа
 var getRandomNumber = function (min, max) {
@@ -52,7 +55,7 @@ var getSlicedElements = function (items) {
 };
 
 // создание случайного объявления
-var createOffer = function () {
+var createOffer = function (i) {
   var objectAddress = {
     'x': getRandomNumber(MIN_X, layoutMaxX),
     'y': getRandomNumber(MIN_Y, MAX_Y)
@@ -62,7 +65,7 @@ var createOffer = function () {
       'avatar': 'img/avatars/user0' + getRandomNumber(1, TOTAL_OFFERS) + '.png'
     },
     'offer': {
-      'title': getRandomElement(TITLES),
+      'title': TITLES[i],
       'address': objectAddress.x + ' , ' + objectAddress.y,
       'price': getRandomNumber(0, MAX_PRICE),
       'type': getRandomElement(TYPES),
@@ -89,11 +92,7 @@ var generateOffers = function (totalOffers) {
 };
 
 // создание пина
-var renderOfferPin = function (offer) {
-  var pinTemplate = document.querySelector('#pin')
-    .content
-    .querySelector('.map__pin');
-
+var getOfferPin = function (offer) {
   var pinElement = pinTemplate.cloneNode(true);
   pinElement.style.left = offer.location.x - PIN_WIDTH / 2 + 'px';
   pinElement.style.top = offer.location.y - PIN_HEIGHT + 'px';
@@ -106,17 +105,17 @@ var renderOfferPin = function (offer) {
 };
 
 // отрисовка меток
-var drawPins = function (items) {
+var renderPins = function (items) {
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < items.length; i++) {
-    fragment.appendChild(renderOfferPin(items[i]));
+    fragment.appendChild(getOfferPin(items[i]));
   }
   mapPins.appendChild(fragment);
 };
 
 var init = function () {
   var offers = generateOffers(TOTAL_OFFERS);
-  drawPins(offers);
+  renderPins(offers);
 
   map.classList.remove('map--faded'); // временно
 };
