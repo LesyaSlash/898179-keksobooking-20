@@ -114,10 +114,6 @@ var renderPins = function (items) {
 };
 var offers = generateOffers(TOTAL_OFFERS);
 var init = function () {
-<<<<<<< HEAD
-=======
-  var offers = generateOffers(TOTAL_OFFERS);
->>>>>>> master
   renderPins(offers);
 
   map.classList.remove('map--faded'); // временно
