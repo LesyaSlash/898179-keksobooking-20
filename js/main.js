@@ -253,47 +253,42 @@ var addressInput = adForm.querySelector('input[name="address"]');
 var roomsSelect = adForm.querySelector('select[name="rooms"]');
 var capacitySelect = adForm.querySelector('select[name="capacity"]');
 
-// функция блокировки полей форм для неактивного состояния
-var disableInputs = function () {
-  adFormFieldsets.forEach(function (element) {
-    element.setAttribute('disabled', 'disabled');
-  });
-  mapFiltersInputs.forEach(function (element) {
-    element.setAttribute('disabled', 'disabled');
-  });
-};
-
-// поля форм разблокированы для активного состояния
-var enableInputs = function () {
-  adFormFieldsets.forEach(function (element) {
-    element.removeAttribute('disabled');
-  });
-  mapFiltersInputs.forEach(function (element) {
-    element.removeAttribute('disabled');
+// функция блокировки полей форм
+var changeDisabledStatus = function (elements, disable) {
+  elements.forEach(function (element) {
+    element.disabled = disable;
   });
 };
 
 // карта и форма разблокированы для активного состояния
 var enableMap = function () {
   map.classList.remove('map--faded');
+  changeDisabledStatus(mapFiltersInputs, false);
+};
+
+var enableForm = function () {
   adForm.classList.remove('ad-form--disabled');
+  changeDisabledStatus(adFormFieldsets, false);
+};
+
+// проверяет, активна ли страница
+var isMapActivated = function () {
+  var result = (map.classList.contains('map--faded')) ? false : true;
+  return result;
 };
 
 // функция рассчитывает положение главного пина на карте
-var getPinPosition = function (pin, width, height) {
-  var positionX = Math.round(pin.offsetLeft + width / 2);
-  var positionY = Math.round(pin.offsetTop + height);
+var getPinPosition = function () {
+  var positionX = Math.round(mainPin.offsetLeft + MAIN_PIN_WIDTH / 2);
+  var positionY = (isMapActivated()) ? Math.round(mainPin.offsetTop + MAIN_PIN_HEIGHT_ACTIVE)
+    : Math.round(mainPin.offsetTop + MAIN_PIN_HEIGHT / 2);
 
   return positionX + ', ' + positionY;
 };
 
-// функция заполняет поле адреса в зависимости от состояния страницы
-var renderAdress = function (isServiceActive) {
-  if (isServiceActive) {
-    addressInput.value = getPinPosition(mainPin, MAIN_PIN_WIDTH, MAIN_PIN_HEIGHT_ACTIVE);
-  } else {
-    addressInput.value = getPinPosition(mainPin, MAIN_PIN_WIDTH, MAIN_PIN_HEIGHT / 2);
-  }
+// функция заполняет поле адреса
+var renderAddress = function () {
+  addressInput.value = getPinPosition();
 };
 
 // обработчик нажатия левой кнопки мыши
@@ -314,8 +309,9 @@ var mainPinEnterPressHandler = function (evt) {
 
 // функция для неактивного состояния страницы
 var disableService = function () {
-  disableInputs();
-  renderAdress(false);
+  changeDisabledStatus(adFormFieldsets, true);
+  changeDisabledStatus(mapFiltersInputs, true);
+  renderAddress();
   mainPin.addEventListener('mousedown', mainPinMousedownHandler);
   mainPin.addEventListener('keydown', mainPinEnterPressHandler);
 };
@@ -323,8 +319,8 @@ var disableService = function () {
 // функция перехода в активное состояние
 var enableService = function () {
   enableMap();
-  enableInputs();
-  renderAdress(true);
+  enableForm();
+  renderAddress();
   renderPins(offers);
   mainPin.removeEventListener('mousedown', mainPinMousedownHandler);
   mainPin.removeEventListener('keydown', mainPinEnterPressHandler);
