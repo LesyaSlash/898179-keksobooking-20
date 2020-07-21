@@ -110,12 +110,6 @@ var getOfferPin = function (ad) {
     openAdCard(ad);
   });
 
-  pinElement.addEventListener('keydown', function (evt) {
-    if (evt.key === 'Enter') {
-      evt.preventDefault();
-      openAdCard(ad);
-    }
-  });
   return pinElement;
 };
 
@@ -243,10 +237,6 @@ var getCard = function (ad) {
     }
   });
 
-  // вставка DOM-элемента в блок .map перед блоком .map__filters-container
-  var filtersContainer = document.querySelector('.map__filters-container');
-  filtersContainer.insertAdjacentElement('beforebegin', cardElement);
-
   // закрытие карточки по клику на крестик
   var cardCloseButton = cardElement.querySelector('.popup__close');
   cardCloseButton.addEventListener('click', closeAdCard);
@@ -301,7 +291,7 @@ var getPinPosition = function () {
 
 // функция заполняет поле адреса
 var renderAddress = function (pinPosition) {
-  addressInput.value = pinPosition();
+  addressInput.value = pinPosition;
 };
 
 // обработчик нажатия левой кнопки мыши
@@ -324,7 +314,7 @@ var mainPinEnterPressHandler = function (evt) {
 var disableService = function () {
   changeDisabledStatus(adFormFieldsets, true);
   changeDisabledStatus(mapFiltersInputs, true);
-  renderAddress(getPinPosition);
+  renderAddress(getPinPosition());
   mainPin.addEventListener('mousedown', mainPinMousedownHandler);
   mainPin.addEventListener('keydown', mainPinEnterPressHandler);
 };
@@ -333,14 +323,14 @@ var disableService = function () {
 var enableService = function () {
   enableMap();
   enableForm();
-  renderAddress(getPinPosition);
+  renderAddress(getPinPosition());
   renderPins(offers);
   mainPin.removeEventListener('mousedown', mainPinMousedownHandler);
   mainPin.removeEventListener('keydown', mainPinEnterPressHandler);
 };
 
 // валидация полей "количество комнат" и "количество мест"
-var roomsCapacityError = {
+var roomsCapacityErrors = {
   1: {
     capacity: ['1'],
     error: 'Одна комната только для 1 гостя. Измените выбранные параметры.'
@@ -362,10 +352,10 @@ var roomsCapacityError = {
 var validateCapacity = function () {
   var guestsQuantity = capacitySelect.value;
   var roomsQuantity = roomsSelect.value;
-  if (roomsCapacityError[roomsQuantity].capacity.includes(guestsQuantity)) {
+  if (roomsCapacityErrors[roomsQuantity].capacity.includes(guestsQuantity)) {
     roomsSelect.setCustomValidity('');
   } else {
-    roomsSelect.setCustomValidity(roomsCapacityError[roomsQuantity].error);
+    roomsSelect.setCustomValidity(roomsCapacityErrors[roomsQuantity].error);
     roomsSelect.reportValidity();
   }
 };
@@ -415,20 +405,30 @@ priceInput.addEventListener('input', function () {
 
 // валидация типа жилья
 var typeSelect = adForm.querySelector('#type');
-var typePriceError = {
-  'bungalo': {
+var typePriceErrors = {
+  // пробовала изменить свойства по замечанию "Свойства этого объекта
+  // должны быть в uppercase. Кавычки в названии свойство лучше
+  // не использовать без необходимости." ('bungalo' на BUNGALO), но так
+  // не срабатывала валидация ниже по коду, т.к. не получалось обратиться
+  // к значению селекта. Вероятно, я что-то не поняла, но не придумала ничего
+  // лучше, чем реализовать через индекс выбранной опции. Надеюсь, так тоже подойдет.
+  0: {
+    type: 'bungalo',
     minPrice: 0,
     error: ''
   },
-  'flat': {
+  1: {
+    type: 'flat',
     minPrice: 1000,
     error: 'Минимальная цена квартиры — 1000 р/ночь'
   },
-  'house': {
+  2: {
+    type: 'house',
     minPrice: 5000,
     error: 'Минимальная цена дома — 5000 р/ночь'
   },
-  'palace': {
+  3: {
+    type: 'palace',
     minPrice: 10000,
     error: 'Минимальная цена дворца — 10000 р/ночь'
   }
@@ -436,15 +436,15 @@ var typePriceError = {
 
 var validateType = function () {
   var price = priceInput.value;
-  var houseType = typeSelect.value;
-  if (price < typePriceError[houseType].minPrice) {
-    typeSelect.setCustomValidity(typePriceError[houseType].error);
+  var typeIndex = typeSelect.options.selectedIndex;
+  if (price < typePriceErrors[typeIndex].minPrice) {
+    typeSelect.setCustomValidity(typePriceErrors[typeIndex].error);
     typeSelect.reportValidity();
   } else {
     typeSelect.setCustomValidity('');
   }
-  priceInput.setAttribute('min', typePriceError[houseType].minPrice);
-  priceInput.setAttribute('placeholder', typePriceError[houseType].minPrice);
+  priceInput.setAttribute('min', typePriceErrors[typeIndex].minPrice);
+  priceInput.setAttribute('placeholder', typePriceErrors[typeIndex].minPrice);
 };
 
 var typeChangeHandler = function () {
@@ -471,6 +471,11 @@ validateCapacity();
 // открытие карточки объявления
 var openAdCard = function (ad) {
   getCard(ad);
+
+  // вставка DOM-элемента в блок .map перед блоком .map__filters-container
+  var filtersContainer = document.querySelector('.map__filters-container');
+  filtersContainer.insertAdjacentElement('beforebegin', getCard(ad));
+
   document.addEventListener('keydown', adCardEscPressHandler);
 };
 
