@@ -4,7 +4,6 @@
   var TOTAL_OFFERS = 8;
   var MAX_GUESTS = 8;
   var MAX_ROOMS = 4;
-  var MAX_PRICE = 1000000;
   var MIN_X = 0;
   var MIN_Y = 130;
   var MAX_Y = 630;
@@ -33,7 +32,7 @@
       'offer': {
         'title': TITLES[i],
         'address': objectAddress.x + ' , ' + objectAddress.y,
-        'price': window.util.getRandomNumber(0, MAX_PRICE),
+        'price': window.util.getRandomNumber(0, window.util.MAX_PRICE),
         'type': window.util.getRandomElement(TYPES),
         'rooms': window.util.getRandomNumber(1, MAX_ROOMS),
         'guests': window.util.getRandomNumber(1, MAX_GUESTS),
@@ -58,7 +57,6 @@
   };
 
   window.data = {
-    offers: generateOffers(TOTAL_OFFERS),
-    MAX_PRICE: MAX_PRICE
+    offers: generateOffers(TOTAL_OFFERS)
   };
 })();

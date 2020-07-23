@@ -21,6 +21,11 @@
     window.util.changeDisabledStatus(adFormFieldsets, false);
   };
 
+  var disableForm = function () {
+    adForm.classList.add('ad-form--disabled');
+    window.util.changeDisabledStatus(adFormFieldsets, true);
+  };
+
   // функция заполняет поле адреса
   var renderAddress = function (pinPosition) {
     addressInput.value = pinPosition;
@@ -78,7 +83,7 @@
 
   // валидация цены
   priceInput.addEventListener('input', function () {
-    if (priceInput.value > window.data.MAX_PRICE) {
+    if (priceInput.value > window.util.MAX_PRICE) {
       priceInput.setCustomValidity('Слишком дорого! Цена не должна превышать 1000000р.');
     } else if (priceInput.validity.valueMissing) {
       priceInput.setCustomValidity('Обязательное поле. Введите цену.');
@@ -149,8 +154,8 @@
   validateCapacity();
 
   window.form = {
-    adFormFieldsets: adFormFieldsets,
     enableForm: enableForm,
+    disableForm: disableForm,
     renderAddress: renderAddress
   };
 })();

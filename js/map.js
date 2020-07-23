@@ -16,6 +16,11 @@
     window.util.changeDisabledStatus(mapFiltersInputs, false);
   };
 
+  var disableMap = function () {
+    map.classList.add('map--faded');
+    window.util.changeDisabledStatus(mapFiltersInputs, true);
+  };
+
   // проверяет, активна ли страница
   var isMapActivated = function () {
     return !map.classList.contains('map--faded');
@@ -30,40 +35,11 @@
     return positionX + ', ' + positionY;
   };
 
-  // обработчик нажатия левой кнопки мыши
-  var mainPinMousedownHandler = function (evt) {
-    if (evt.button === 0) {
-      evt.preventDefault();
-      enableService();
-    }
+  window.map = {
+    mainPin: mainPin,
+    getPinPosition: getPinPosition,
+    enableMap: enableMap,
+    disableMap: disableMap
   };
 
-  // обработчик нажатия клавиши Enter
-  var mainPinEnterPressHandler = function (evt) {
-    if (evt.key === 'Enter') {
-      evt.preventDefault();
-      enableService();
-    }
-  };
-
-  // функция для неактивного состояния страницы
-  var disableService = function () {
-    window.util.changeDisabledStatus(window.form.adFormFieldsets, true);
-    window.util.changeDisabledStatus(mapFiltersInputs, true);
-    window.form.renderAddress(getPinPosition());
-    mainPin.addEventListener('mousedown', mainPinMousedownHandler);
-    mainPin.addEventListener('keydown', mainPinEnterPressHandler);
-  };
-
-  // функция перехода в активное состояние
-  var enableService = function () {
-    enableMap();
-    window.form.enableForm();
-    window.form.renderAddress(getPinPosition());
-    window.pins.renderPins(window.data.offers);
-    mainPin.removeEventListener('mousedown', mainPinMousedownHandler);
-    mainPin.removeEventListener('keydown', mainPinEnterPressHandler);
-  };
-
-  disableService();
 })();

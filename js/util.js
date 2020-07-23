@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var MAX_PRICE = 1000000;
+
   // рандом числа
   var getRandomNumber = function (min, max) {
     return Math.floor(Math.random() * (max - min) + min);
@@ -39,6 +41,7 @@
 
   // экспорт
   window.util = {
+    MAX_PRICE: MAX_PRICE,
     getRandomNumber: getRandomNumber,
     getRandomElement: getRandomElement,
     getSlicedElements: getSlicedElements,
