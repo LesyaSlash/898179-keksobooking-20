@@ -1,6 +1,11 @@
 'use strict';
 
 (function () {
+  var MIN_X = 0;
+  var MIN_Y = 130;
+  var MAX_Y = 630;
+  var map = document.querySelector('.map');
+  var layoutMaxX = map.clientWidth;
   var MAX_PRICE = 1000000;
 
   // рандом числа
@@ -41,6 +46,10 @@
 
   // экспорт
   window.util = {
+    MIN_X: MIN_X,
+    MIN_Y: MIN_Y,
+    MAX_Y: MAX_Y,
+    layoutMaxX: layoutMaxX,
     MAX_PRICE: MAX_PRICE,
     getRandomNumber: getRandomNumber,
     getRandomElement: getRandomElement,

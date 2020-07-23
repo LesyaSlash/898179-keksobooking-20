@@ -36,6 +36,8 @@
   };
 
   window.map = {
+    MAIN_PIN_WIDTH: MAIN_PIN_WIDTH,
+    MAIN_PIN_HEIGHT_ACTIVE: MAIN_PIN_HEIGHT_ACTIVE,
     mainPin: mainPin,
     getPinPosition: getPinPosition,
     enableMap: enableMap,
