@@ -15,7 +15,7 @@
     window.map.enableMap();
     window.form.enableForm();
     window.form.renderAddress(window.map.getPinPosition());
-    window.pins.renderPins(window.data.offers);
+    window.backend.loadData(window.pins.renderPins);
     window.map.mainPin.removeEventListener('mousedown', mainPinMousedownHandler);
     window.map.mainPin.removeEventListener('keydown', mainPinEnterPressHandler);
   };
