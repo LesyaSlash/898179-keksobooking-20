@@ -7,7 +7,10 @@
     BAD_REQUEST: 400,
   };
   var TIMEOUT_IN_MS = 10000;
-  var URL = 'https://javascript.pages.academy/keksobooking/data';
+  var URL = {
+    LOAD: 'https://javascript.pages.academy/keksobooking/data',
+    UPLOAD: 'https://javascript.pages.academy/keksobooking'
+  };
 
   var getXHR = function (successHandler, errorHandler) {
     var xhr = new XMLHttpRequest();
@@ -48,11 +51,18 @@
 
   var loadData = function (successHandler, errorHandler) {
     var xhr = getXHR(successHandler, errorHandler);
-    xhr.open('GET', URL);
+    xhr.open('GET', URL.LOAD);
     xhr.send();
   };
 
+  var uploadData = function (successHandler, errorHandler, data) {
+    var xhr = getXHR(successHandler, errorHandler);
+    xhr.open('POST', URL.UPLOAD);
+    xhr.send(data);
+  };
+
   window.backend = {
-    loadData: loadData
+    loadData: loadData,
+    uploadData: uploadData
   };
 })();

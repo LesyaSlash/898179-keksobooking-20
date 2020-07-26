@@ -22,6 +22,7 @@
   };
 
   var disableForm = function () {
+    adForm.reset();
     adForm.classList.add('ad-form--disabled');
     window.util.changeDisabledStatus(adFormFieldsets, true);
   };

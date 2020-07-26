@@ -36,8 +36,17 @@
     mapPins.appendChild(fragment);
   };
 
+  // удаление меток
+  var removePins = function () {
+    var renderedPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    renderedPins.forEach(function (pin) {
+      pin.remove();
+    });
+  };
+
   // экспорт
   window.pins = {
-    renderPins: renderPins
+    renderPins: renderPins,
+    removePins: removePins
   };
 })();
