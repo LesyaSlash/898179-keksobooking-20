@@ -155,6 +155,7 @@
   validateCapacity();
 
   window.form = {
+    adForm: adForm,
     enableForm: enableForm,
     disableForm: disableForm,
     renderAddress: renderAddress

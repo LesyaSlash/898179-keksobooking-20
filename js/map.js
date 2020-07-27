@@ -28,6 +28,7 @@
   var disableMap = function () {
     map.classList.add('map--faded');
     window.util.changeDisabledStatus(mapFiltersInputs, true);
+    setMainPinPosition();
   };
 
   // проверяет, активна ли страница
@@ -51,7 +52,6 @@
     getPinPosition: getPinPosition,
     enableMap: enableMap,
     disableMap: disableMap,
-    setMainPinPosition: setMainPinPosition
   };
 
 })();
