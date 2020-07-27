@@ -9,6 +9,15 @@
   var mapFiltersInputs = mapFiltersForm.querySelectorAll(':scope > *');
 
   var mainPin = map.querySelector('.map__pin--main');
+  var mainPinStartPosition = {
+    x: mainPin.style.left,
+    y: mainPin.style.top
+  };
+  // возврат метки в исходное положение
+  var setMainPinPosition = function () {
+    mainPin.style.left = mainPinStartPosition.x;
+    mainPin.style.top = mainPinStartPosition.y;
+  };
 
   // карта разблокирована для активного состояния
   var enableMap = function () {
@@ -19,6 +28,7 @@
   var disableMap = function () {
     map.classList.add('map--faded');
     window.util.changeDisabledStatus(mapFiltersInputs, true);
+    setMainPinPosition();
   };
 
   // проверяет, активна ли страница
@@ -41,7 +51,7 @@
     mainPin: mainPin,
     getPinPosition: getPinPosition,
     enableMap: enableMap,
-    disableMap: disableMap
+    disableMap: disableMap,
   };
 
 })();

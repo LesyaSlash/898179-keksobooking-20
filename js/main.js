@@ -4,6 +4,7 @@
   // функция для неактивного состояния страницы
   var disableService = function () {
     window.map.disableMap();
+    window.pins.removePins();
     window.form.disableForm();
     window.form.renderAddress(window.map.getPinPosition());
     window.map.mainPin.addEventListener('mousedown', mainPinMousedownHandler);
@@ -35,6 +36,26 @@
       enableService();
     }
   };
+
+  // отправка формы
+  var uploadSuccessHandler = function () {
+    window.message.showSuccess();
+    disableService();
+  };
+
+  var uploadErrorHandler = function () {
+    window.message.showError();
+  };
+
+  window.form.adForm.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.uploadData(uploadSuccessHandler, uploadErrorHandler, new FormData(window.form.adForm));
+  });
+
+  // очистка формы
+  window.form.adForm.addEventListener('reset', function () {
+    disableService();
+  });
 
   disableService();
 })();
