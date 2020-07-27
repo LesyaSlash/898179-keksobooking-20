@@ -1,9 +1,6 @@
 'use strict';
 
 (function () {
-  var adForm = document.querySelector('.ad-form');
-
-
   // функция для неактивного состояния страницы
   var disableService = function () {
     window.map.disableMap();
@@ -52,7 +49,7 @@
 
   window.form.adForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    window.backend.uploadData(uploadSuccessHandler, uploadErrorHandler, new FormData(adForm));
+    window.backend.uploadData(uploadSuccessHandler, uploadErrorHandler, new FormData(window.form.adForm));
   });
 
   // очистка формы
