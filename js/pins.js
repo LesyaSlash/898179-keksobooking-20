@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var MAX_PINS_COUNT = 5;
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
   var mapPins = document.querySelector('.map__pins');
@@ -29,10 +30,11 @@
 
   // отрисовка меток
   var renderPins = function (items) {
+    removePins();
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < items.length; i++) {
-      fragment.appendChild(getOfferPin(items[i]));
-    }
+    items.slice(0, MAX_PINS_COUNT).forEach(function (item) {
+      fragment.appendChild(getOfferPin(item));
+    });
     mapPins.appendChild(fragment);
   };
 

@@ -49,6 +49,7 @@
     MAIN_PIN_WIDTH: MAIN_PIN_WIDTH,
     MAIN_PIN_HEIGHT_ACTIVE: MAIN_PIN_HEIGHT_ACTIVE,
     mainPin: mainPin,
+    mapFiltersForm: mapFiltersForm,
     getPinPosition: getPinPosition,
     enableMap: enableMap,
     disableMap: disableMap,

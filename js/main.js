@@ -11,12 +11,18 @@
     window.map.mainPin.addEventListener('keydown', mainPinEnterPressHandler);
   };
 
+  var successLoadHandler = function (data) {
+    window.pins.renderPins(data);
+    window.offers = data;
+  };
+
   // функция перехода в активное состояние
   var enableService = function () {
     window.map.enableMap();
     window.form.enableForm();
     window.form.renderAddress(window.map.getPinPosition());
-    window.backend.loadData(window.pins.renderPins);
+    // window.backend.loadData(window.pins.renderPins);
+    window.backend.loadData(successLoadHandler);
     window.map.mainPin.removeEventListener('mousedown', mainPinMousedownHandler);
     window.map.mainPin.removeEventListener('keydown', mainPinEnterPressHandler);
   };
