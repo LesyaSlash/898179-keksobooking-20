@@ -3,17 +3,24 @@
 (function () {
   var TITLE_MIN_LENGTH = 30;
   var TITLE_MAX_LENGTH = 100;
+  var IMAGE_SIZE = 70;
+  var FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
   var adForm = document.querySelector('.ad-form');
   var adFormFieldsets = adForm.querySelectorAll('fieldset');
-  var addressInput = adForm.querySelector('input[name="address"]');
-  var roomsSelect = adForm.querySelector('select[name="rooms"]');
-  var capacitySelect = adForm.querySelector('select[name="capacity"]');
+  var addressInput = adForm.querySelector('#address');
+  var roomsSelect = adForm.querySelector('#room_number');
+  var capacitySelect = adForm.querySelector('#capacity');
   var titleInput = adForm.querySelector('#title');
   var typeSelect = adForm.querySelector('#type');
   var priceInput = adForm.querySelector('#price');
   var checkinSelect = adForm.querySelector('#timein');
   var checkoutSelect = adForm.querySelector('#timeout');
+  var avatarChooser = adForm.querySelector('#avatar');
+  var avatarPreview = adForm.querySelector('.ad-form-header__preview img');
+  var imageChooser = adForm.querySelector('#images');
+  var imagePreview = adForm.querySelector('.ad-form__photo');
+  var avatarDefaultSrc = avatarPreview.src;
 
   // форма разблокирована для активного состояния
   var enableForm = function () {
@@ -23,6 +30,7 @@
 
   var disableForm = function () {
     adForm.reset();
+    clearImages();
     adForm.classList.add('ad-form--disabled');
     window.util.changeDisabledStatus(adFormFieldsets, true);
   };
@@ -145,12 +153,64 @@
     checkinSelect.value = checkoutSelect.value;
   };
 
+  // загрузка превьюшек фото
+  var addPhotoPreview = function (chooser, preview, cb) {
+    var file = chooser.files[0];
+    var fileName = file.name.toLowerCase();
+
+    var matches = FILE_TYPES.some(function (it) {
+      return fileName.endsWith(it);
+    });
+
+    if (matches) {
+      var reader = new FileReader();
+
+      reader.addEventListener('load', function () {
+        if (cb) {
+          preview = cb();
+        }
+        preview.src = reader.result;
+      });
+
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // создание элементов для фотографий жилья
+  var createImage = function () {
+    var imageElement = document.createElement('img');
+    imageElement.width = IMAGE_SIZE;
+    imageElement.height = IMAGE_SIZE;
+    imagePreview.appendChild(imageElement);
+    return imageElement;
+  };
+
+  // обработчики показа превьюшек
+  var avatarChangeHandler = function () {
+    addPhotoPreview(avatarChooser, avatarPreview);
+  };
+
+  var imageChangeHandler = function () {
+    addPhotoPreview(imageChooser, imagePreview, createImage);
+  };
+
+  // удаление превью
+  var clearImages = function () {
+    avatarPreview.src = avatarDefaultSrc;
+    var images = imagePreview.querySelectorAll('img');
+    images.forEach(function (image) {
+      image.remove();
+    });
+  };
+
   capacitySelect.addEventListener('change', capacityChangeHandler);
   roomsSelect.addEventListener('change', capacityChangeHandler);
   typeSelect.addEventListener('change', typeChangeHandler);
   priceInput.addEventListener('change', typeChangeHandler);
   checkinSelect.addEventListener('change', checkinChangeHandler);
   checkoutSelect.addEventListener('change', checkoutChangeHandler);
+  avatarChooser.addEventListener('change', avatarChangeHandler);
+  imageChooser.addEventListener('change', imageChangeHandler);
   validateType();
   validateCapacity();
 

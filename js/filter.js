@@ -20,7 +20,7 @@
   };
 
   // фильтр по цене
-  var priceRange = {
+  var PriceRange = {
     LOW: 10000,
     HIGH: 50000
   };
@@ -28,11 +28,11 @@
   var comparePrice = function (adParameter) {
     switch (priceFilter.value) {
       case 'low':
-        return adParameter < priceRange.LOW;
+        return adParameter < PriceRange.LOW;
       case 'high':
-        return adParameter > priceRange.HIGH;
+        return adParameter > PriceRange.HIGH;
       case 'middle':
-        return adParameter >= priceRange.LOW && adParameter <= priceRange.HIGH;
+        return adParameter >= PriceRange.LOW && adParameter <= PriceRange.HIGH;
       default:
         return true;
     }
