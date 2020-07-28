@@ -4,10 +4,12 @@
   var successMessageTemplate = document.querySelector('#success')
     .content
     .querySelector('.success');
+  var successElement = successMessageTemplate.cloneNode(true);
 
   var errorMessageTemplate = document.querySelector('#error')
     .content
     .querySelector('.error');
+  var errorElement = errorMessageTemplate.cloneNode(true);
 
   // успешная отправка формы
   var successPopupEscPressHandler = function (evt) {
@@ -18,20 +20,19 @@
   };
 
   var successPopupClickHandler = function (evt) {
-    if (evt.target === document.querySelector('.success')) {
+    if (evt.target === successElement) {
       evt.preventDefault();
       closeSuccessPopup();
     }
   };
 
   var closeSuccessPopup = function () {
-    document.querySelector('.success').remove();
+    successElement.remove();
     document.removeEventListener('keydown', successPopupEscPressHandler);
     document.removeEventListener('click', successPopupClickHandler);
   };
 
   var showSuccess = function () {
-    var successElement = successMessageTemplate.cloneNode(true);
     document.querySelector('main').appendChild(successElement);
 
     document.addEventListener('keydown', successPopupEscPressHandler);
@@ -47,7 +48,7 @@
   };
 
   var errorPopupClickHandler = function (evt) {
-    if (evt.target === document.querySelector('.error')) {
+    if (evt.target === errorElement) {
       evt.preventDefault();
       closeErrorPopup();
     }
@@ -59,13 +60,12 @@
   };
 
   var closeErrorPopup = function () {
-    document.querySelector('.error').remove();
+    errorElement.remove();
     document.removeEventListener('keydown', errorPopupEscPressHandler);
     document.removeEventListener('click', errorPopupClickHandler);
   };
 
   var showError = function () {
-    var errorElement = errorMessageTemplate.cloneNode(true);
     var message = document.querySelector('main').appendChild(errorElement);
     var errorButton = message.querySelector('.error__button');
 
