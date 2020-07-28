@@ -1,8 +1,6 @@
 'use strict';
 
 (function () {
-  var FILTER_DEFAULT_VALUE = 'any';
-  var typeFilter = window.filter.filtersForm.querySelector('#housing-type');
   // функция для неактивного состояния страницы
   var disableService = function () {
     window.map.disableMap();
@@ -66,13 +64,15 @@
     disableService();
   });
 
-  // фильтры
-  typeFilter.addEventListener('change', function () {
+  // фильтры по клику
+  var debouncedChangeFilterCallback = window.debounce(function () {
+    var filteredOffers = window.filter.getData(window.offers);
     window.card.closeAdCard();
-    var filteredOffers = window.offers.filter(function (ad) {
-      return typeFilter.value === FILTER_DEFAULT_VALUE || typeFilter.value === ad.offer.type;
-    });
     window.pins.renderPins(filteredOffers);
+  });
+
+  window.filter.filtersForm.addEventListener('change', function () {
+    debouncedChangeFilterCallback();
   });
 
   disableService();

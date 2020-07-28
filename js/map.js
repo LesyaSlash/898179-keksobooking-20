@@ -50,5 +50,4 @@
     enableMap: enableMap,
     disableMap: disableMap,
   };
-
 })();
