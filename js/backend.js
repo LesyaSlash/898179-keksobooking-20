@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var StatusCodes = {
+  var StatusCode = {
     OK: 200,
     NOT_FOUND: 404,
     BAD_REQUEST: 400,
@@ -19,13 +19,13 @@
     xhr.addEventListener('load', function () {
       var error;
       switch (xhr.status) {
-        case StatusCodes.OK:
+        case StatusCode.OK:
           successHandler(xhr.response);
           break;
-        case StatusCodes.BAD_REQUEST:
+        case StatusCode.BAD_REQUEST:
           error = 'Неверный запрос';
           break;
-        case StatusCodes.NOT_FOUND:
+        case StatusCode.NOT_FOUND:
           error = 'Ничего не найдено';
           break;
         default:
