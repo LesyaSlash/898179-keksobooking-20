@@ -65,12 +65,14 @@
   });
 
   // фильтры по клику
+  var debouncedChangeFilterCallback = window.debounce(function () {
+    var filteredOffers = window.filter.getData(window.offers);
+    window.card.closeAdCard();
+    window.pins.renderPins(filteredOffers);
+  });
+
   window.filter.filtersForm.addEventListener('change', function () {
-    window.debounce(function () {
-      var filteredOffers = window.filter.filterEveryPosition(window.offers);
-      window.card.closeAdCard();
-      window.pins.renderPins(filteredOffers);
-    })();
+    debouncedChangeFilterCallback();
   });
 
   disableService();

@@ -54,7 +54,7 @@
   };
 
   // объединение фильтров
-  var filterEveryPosition = function (ads) {
+  var getData = function (ads) {
     return ads.filter(function (ad) {
       return compareFilter(typeFilter, ad.offer.type)
         && comparePrice(ad.offer.price)
@@ -65,7 +65,7 @@
   };
 
   window.filter = {
-    filterEveryPosition: filterEveryPosition,
+    getData: getData,
     filtersForm: filtersForm,
     enableFilter: enableFilter,
     disableFilter: disableFilter,
