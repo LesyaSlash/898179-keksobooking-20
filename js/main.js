@@ -1,11 +1,14 @@
 'use strict';
 
 (function () {
+  var FILTER_DEFAULT_VALUE = 'any';
+  var typeFilter = window.filter.filtersForm.querySelector('#housing-type');
   // функция для неактивного состояния страницы
   var disableService = function () {
     window.map.disableMap();
     window.pins.removePins();
     window.form.disableForm();
+    window.filter.disableFilter();
     window.form.renderAddress(window.map.getPinPosition());
     window.map.mainPin.addEventListener('mousedown', mainPinMousedownHandler);
     window.map.mainPin.addEventListener('keydown', mainPinEnterPressHandler);
@@ -20,8 +23,8 @@
   var enableService = function () {
     window.map.enableMap();
     window.form.enableForm();
+    window.filter.enableFilter();
     window.form.renderAddress(window.map.getPinPosition());
-    // window.backend.loadData(window.pins.renderPins);
     window.backend.loadData(successLoadHandler);
     window.map.mainPin.removeEventListener('mousedown', mainPinMousedownHandler);
     window.map.mainPin.removeEventListener('keydown', mainPinEnterPressHandler);
@@ -61,6 +64,15 @@
   // очистка формы
   window.form.adForm.addEventListener('reset', function () {
     disableService();
+  });
+
+  // фильтры
+  typeFilter.addEventListener('change', function () {
+    window.card.closeAdCard();
+    var filteredOffers = window.offers.filter(function (ad) {
+      return typeFilter.value === FILTER_DEFAULT_VALUE || typeFilter.value === ad.offer.type;
+    });
+    window.pins.renderPins(filteredOffers);
   });
 
   disableService();

@@ -5,14 +5,13 @@
   var MAIN_PIN_HEIGHT = 65;
   var MAIN_PIN_HEIGHT_ACTIVE = 84;
   var map = document.querySelector('.map');
-  var mapFiltersForm = document.querySelector('.map__filters');
-  var mapFiltersInputs = mapFiltersForm.querySelectorAll(':scope > *');
 
   var mainPin = map.querySelector('.map__pin--main');
   var mainPinStartPosition = {
     x: mainPin.style.left,
     y: mainPin.style.top
   };
+
   // возврат метки в исходное положение
   var setMainPinPosition = function () {
     mainPin.style.left = mainPinStartPosition.x;
@@ -22,12 +21,10 @@
   // карта разблокирована для активного состояния
   var enableMap = function () {
     map.classList.remove('map--faded');
-    window.util.changeDisabledStatus(mapFiltersInputs, false);
   };
 
   var disableMap = function () {
     map.classList.add('map--faded');
-    window.util.changeDisabledStatus(mapFiltersInputs, true);
     setMainPinPosition();
   };
 
@@ -49,7 +46,6 @@
     MAIN_PIN_WIDTH: MAIN_PIN_WIDTH,
     MAIN_PIN_HEIGHT_ACTIVE: MAIN_PIN_HEIGHT_ACTIVE,
     mainPin: mainPin,
-    mapFiltersForm: mapFiltersForm,
     getPinPosition: getPinPosition,
     enableMap: enableMap,
     disableMap: disableMap,
