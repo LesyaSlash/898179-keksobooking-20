@@ -216,8 +216,8 @@
 
   window.form = {
     adForm: adForm,
-    enableForm: enableForm,
-    disableForm: disableForm,
+    enable: enableForm,
+    disable: disableForm,
     renderAddress: renderAddress
   };
 })();

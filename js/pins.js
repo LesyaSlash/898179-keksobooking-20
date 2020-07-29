@@ -21,8 +21,8 @@
 
     // по нажатию на пин открывается карточка объявления
     pinElement.addEventListener('click', function () {
-      window.card.closeAdCard();
-      window.card.openAdCard(ad);
+      window.card.closeAd();
+      window.card.openAd(ad);
     });
 
     return pinElement;
@@ -48,7 +48,7 @@
 
   // экспорт
   window.pins = {
-    renderPins: renderPins,
-    removePins: removePins
+    render: renderPins,
+    remove: removePins
   };
 })();

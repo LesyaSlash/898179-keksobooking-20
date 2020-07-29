@@ -3,25 +3,25 @@
 (function () {
   // функция для неактивного состояния страницы
   var disableService = function () {
-    window.map.disableMap();
-    window.pins.removePins();
-    window.form.disableForm();
-    window.filter.disableFilter();
+    window.map.disable();
+    window.pins.remove();
+    window.form.disable();
+    window.filter.disable();
     window.form.renderAddress(window.map.getPinPosition());
     window.map.mainPin.addEventListener('mousedown', mainPinMousedownHandler);
     window.map.mainPin.addEventListener('keydown', mainPinEnterPressHandler);
   };
 
   var successLoadHandler = function (data) {
-    window.pins.renderPins(data);
+    window.pins.render(data);
     window.offers = data;
   };
 
   // функция перехода в активное состояние
   var enableService = function () {
-    window.map.enableMap();
-    window.form.enableForm();
-    window.filter.enableFilter();
+    window.map.enable();
+    window.form.enable();
+    window.filter.enable();
     window.form.renderAddress(window.map.getPinPosition());
     window.backend.loadData(successLoadHandler);
     window.map.mainPin.removeEventListener('mousedown', mainPinMousedownHandler);
@@ -67,8 +67,8 @@
   // фильтры по клику
   var debouncedChangeFilterCallback = window.debounce(function () {
     var filteredOffers = window.filter.getData(window.offers);
-    window.card.closeAdCard();
-    window.pins.renderPins(filteredOffers);
+    window.card.closeAd();
+    window.pins.render(filteredOffers);
   });
 
   window.filter.filtersForm.addEventListener('change', function () {

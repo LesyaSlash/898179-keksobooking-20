@@ -47,7 +47,7 @@
     MAIN_PIN_HEIGHT_ACTIVE: MAIN_PIN_HEIGHT_ACTIVE,
     mainPin: mainPin,
     getPinPosition: getPinPosition,
-    enableMap: enableMap,
-    disableMap: disableMap,
+    enable: enableMap,
+    disable: disableMap,
   };
 })();

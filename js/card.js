@@ -54,9 +54,9 @@
     var features = ad.offer.features;
     var cardFeatures = cardElement.querySelector('.popup__features');
     if (features.length > 0) {
-      for (var i = 0; i < features.length; i++) {
-        cardFeatures.appendChild(getFeature(features[i]));
-      }
+      features.forEach(function (feature) {
+        cardFeatures.appendChild(getFeature(feature));
+      });
     } else {
       cardFeatures.classList.add('hidden');
     }
@@ -68,11 +68,11 @@
     var cardPhotos = cardElement.querySelector('.popup__photos');
     if (photos.length > 0) {
       var cardImage = cardPhotos.querySelector('img');
-      for (var i = 0; i < photos.length; i++) {
+      photos.forEach(function (photo) {
         var imageCopy = cardImage.cloneNode(true);
-        imageCopy.src = photos[i];
+        imageCopy.src = photo;
         cardPhotos.appendChild(imageCopy);
-      }
+      });
       cardPhotos.removeChild(cardPhotos.firstElementChild);
     } else {
       cardPhotos.classList.add('hidden');
@@ -115,7 +115,7 @@
 
     // закрытие карточки по клику на крестик
     var cardCloseButton = cardElement.querySelector('.popup__close');
-    cardCloseButton.addEventListener('click', closeAdCard);
+    cardCloseButton.addEventListener('click', closeButtonClickHandler);
 
     return cardElement;
   };
@@ -138,6 +138,10 @@
     document.removeEventListener('keydown', adCardEscPressHandler);
   };
 
+  var closeButtonClickHandler = function () {
+    closeAdCard();
+  };
+
   // закрытие карточки по нажатию на Esc
   var adCardEscPressHandler = function (evt) {
     if (evt.key === 'Escape') {
@@ -148,7 +152,7 @@
 
   // экспорт
   window.card = {
-    openAdCard: openAdCard,
-    closeAdCard: closeAdCard
+    openAd: openAdCard,
+    closeAd: closeAdCard
   };
 })();

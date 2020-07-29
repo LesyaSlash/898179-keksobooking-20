@@ -67,7 +67,7 @@
   window.filter = {
     getData: getData,
     filtersForm: filtersForm,
-    enableFilter: enableFilter,
-    disableFilter: disableFilter,
+    enable: enableFilter,
+    disable: disableFilter,
   };
 })();
