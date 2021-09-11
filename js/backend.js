@@ -8,7 +8,7 @@
   };
   var TIMEOUT_IN_MS = 10000;
   var URL = {
-    LOAD: 'https://javascript.pages.academy/keksobooking/data',
+    LOAD: 'https://21.javascript.pages.academy/keksobooking/data',
     UPLOAD: 'https://javascript.pages.academy/keksobooking'
   };
 
