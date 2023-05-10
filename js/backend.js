@@ -8,8 +8,8 @@
   };
   var TIMEOUT_IN_MS = 10000;
   var URL = {
-    LOAD: 'https://21.javascript.pages.academy/keksobooking/data',
-    UPLOAD: 'https://javascript.pages.academy/keksobooking'
+    LOAD: 'https://dl.dropboxusercontent.com/s/2up1iy6w994janr/data.json?dl=0',
+    UPLOAD: 'https://26.javascript.pages.academy/keksobooking'
   };
 
   var getXHR = function (successHandler, errorHandler) {
